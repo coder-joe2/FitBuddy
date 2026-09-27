@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitBuddy - AI Fitness Planner</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .topbar { max-width: 900px; margin: 0 auto 18px; display: flex; justify-content: flex-end; }
+        .plans-link { display: inline-block; padding: 10px 16px; border-radius: 4px; background: #173f35; color: white; text-decoration: none; font-weight: bold; }
+        .plans-link:hover { background: #102f28; }
+        .container { max-width: 500px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        label { font-weight: bold; display: block; margin-top: 15px; }
+        input, select, button { width: 100%; padding: 10px; margin-top: 5px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; border: none; font-size: 16px; cursor: pointer; margin-top: 20px; }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+
+<nav class="topbar" aria-label="Main navigation">
+    <a class="plans-link" href="/plans">Plans</a>
+</nav>
+
+<div class="container">
+    <h2>Welcome to FitBuddy 🏋️‍♂️</h2>
+    <p style="text-align: center; color: #666;">Get your AI-personalized 7-day workout plan!</p>
+    
+    <form action="/generate" method="post">
+        {% if error %}
+        <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+            ⚠️ {{ error }}
+        </div>
+        {% endif %}
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required placeholder="Enter your name">
+
+        <label for="age">Age:</label>
+        <input type="number" id="age" name="age" required placeholder="Enter your age">
+
+        <label for="weight">Weight (in kg):</label>
+        <input type="text" id="weight" name="weight" required placeholder="E.g., 70kg">
+
+        <label for="goal">Fitness Goal:</label>
+        <select id="goal" name="goal" required>
+            <option value="Weight Loss">Weight Loss</option>
+            <option value="Muscle Gain">Muscle Gain</option>
+            <option value="General Wellness">General Wellness</option>
+        </select>
+
+        <label for="intensity">Preferred Intensity:</label>
+        <select id="intensity" name="intensity" required>
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <button type="submit">Generate My Plan</button>
+    </form>
+</div>
+
+</body>
+</html>

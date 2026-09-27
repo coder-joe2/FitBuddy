@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saved Workout Plan - FitBuddy</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; color: #24312d; margin: 0; padding: 24px; }
+        main { max-width: 800px; margin: 0 auto; }
+        .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+        .brand, .nav-link { color: #17634d; font-weight: bold; text-decoration: none; }
+        .brand { color: #173f35; font-size: 20px; }
+        h1 { color: #173f35; margin-bottom: 8px; }
+        .meta { color: #62716b; margin-top: 0; }
+        .plan { white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.65; background: white; padding: 20px; border: 1px solid #d4ddd8; border-radius: 4px; }
+        h2 { margin-top: 28px; font-size: 19px; }
+        textarea { width: 100%; box-sizing: border-box; padding: 11px; border: 1px solid #b9c7c0; border-radius: 4px; font: inherit; }
+        button { padding: 10px 15px; margin-top: 10px; border: 0; border-radius: 4px; background: #17634d; color: white; font: inherit; font-weight: bold; cursor: pointer; }
+        .back-link { display: inline-block; margin-top: 22px; color: #17634d; font-weight: bold; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <main>
+        <nav class="topbar" aria-label="Main navigation">
+            <a class="brand" href="/">FitBuddy</a>
+            <a class="nav-link" href="/plans">All saved plans</a>
+        </nav>
+        <h1>{{ plan.owner.name if plan.owner else "Saved" }}'s Workout Plan</h1>
+        <p class="meta">{{ plan.goal }} · {{ plan.intensity }} intensity · {{ plan.created_at.strftime("%b %d, %Y at %I:%M %p") if plan.created_at else "Date unavailable" }}</p>
+        <pre class="plan">{{ workout_plan }}</pre>
+        <h2>Update this plan</h2>
+        <form action="/update/{{ plan.id }}" method="post">
+            <textarea name="feedback" rows="3" required placeholder="What would you like to change?"></textarea>
+            <button type="submit">Update plan</button>
+        </form>
+        <a class="back-link" href="/plans">Back to saved plans</a>
+    </main>
+</body>
+</html>

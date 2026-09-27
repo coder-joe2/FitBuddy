@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your FitBuddy Plan</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f7f6; margin: 0; padding: 20px; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); }
+        h2, h3 { color: #333; }
+        .plan-box { background-color: #f8f9fa; padding: 20px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #ddd; white-space: pre-wrap; line-height: 1.6; }
+        .tip-box { background-color: #d4edda; color: #155724; padding: 15px; border-radius: 5px; margin-bottom: 20px; border: 1px solid #c3e6cb; }
+        textarea { width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; box-sizing: border-box; margin-top: 5px; font-family: inherit; }
+        button { background-color: #007bff; color: white; border: none; padding: 10px 15px; font-size: 16px; cursor: pointer; margin-top: 10px; border-radius: 4px; }
+        button:hover { background-color: #0056b3; }
+        .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #007bff; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Your Personalized Workout Plan 🚀</h2>
+    
+    <div class="tip-box">
+        <strong>💡 Nutrition & Recovery Tip:</strong> <br>
+        {{ tip }}
+    </div>
+
+    <h3>Your 7-Day Schedule:</h3>
+    <!-- 'safe' filter is used if Gemini returns markdown or basic HTML -->
+    <div class="plan-box">{{ workout_plan | safe }}</div>
+
+    <hr style="margin: 30px 0; border-top: 1px solid #eee;">
+
+    {% if error %}
+    <div style="background-color: #f8d7da; color: #721c24; padding: 12px; border-radius: 4px; margin-bottom: 15px; border: 1px solid #f5c6cb;">
+        ⚠️ {{ error }} — Please try again.
+    </div>
+    {% endif %}
+
+    <h3>Want to change something? 🔄</h3>
+    <p>Give feedback (e.g., "more cardio", "make it easier") and AI will update your plan!</p>
+    <form action="/update/{{ plan_id }}" method="post">
+        <textarea name="feedback" rows="3" required placeholder="Enter your feedback here..."></textarea>
+        <button type="submit">Update My Plan</button>
+    </form>
+
+    <a href="/" class="back-link">← Create a New Plan</a>
+    <a href="/plans" class="back-link" style="margin-left: 18px;">View Saved Plans</a>
+</div>
+
+</body>
+</html>
