@@ -1,14 +1,15 @@
-name: Deploy to GitHub Pages
+name: FitBuddy CI
 
 on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 jobs:
   build:
@@ -18,26 +19,13 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
-          node-version: 20
+          python-version: '3.11'
 
       - name: Install dependencies
-        working-directory: FitBuddy
-        run: npm install
+        run: pip install -r requirements.txt
 
-      - name: Build
-        working-directory: FitBuddy
-        run: npm run build
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./FitBuddy/dist
-
-      - name: Deploy
-        uses: actions/deploy-pages@v4
+      - name: Check Python syntax
+        run: python -m py_compile main.py database.py models.py updated_plan.py
